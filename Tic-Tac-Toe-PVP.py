@@ -10,7 +10,7 @@
 from PyQt5 import *
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QApplication, QWidget, QComboBox
-
+from pygame import mixer
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -18,7 +18,7 @@ class Ui_MainWindow(object):
         self.x = 0
         self.o = 0
         self.tie = 0
-        
+        mixer.init()        
         
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(424, 629)
@@ -331,9 +331,15 @@ class Ui_MainWindow(object):
         if self.counter % 2 == 0:
                 b.setText('x')
                 b.setEnabled(False)
+                mixer.music.load('SFX/X_SFX.ogg')                
+                mixer.music.set_volume(0.2)
+                mixer.music.play()
         else:
                 b.setText('o')
                 b.setEnabled(False)
+                mixer.music.load('SFX/O_SFX.ogg')
+                mixer.music.set_volume(0.2)
+                mixer.music.play()
         self.counter += 1
         self.MainLogic()
 
@@ -370,6 +376,9 @@ class Ui_MainWindow(object):
         self.O_score.setText('O:')
         self.Tie_score.setText('Tie:')
         self.label.setText('Tic Tac Toe')
+        mixer.music.load('SFX/RESTART_SFX.ogg')
+        mixer.music.set_volume(0.09)
+        mixer.music.play()
         
         
         
@@ -403,6 +412,9 @@ class Ui_MainWindow(object):
                 
                 #checks if tie
         if self.button0.text() != '' and self.button1.text() != '' and  self.button2.text() != '' and  self.button3.text() != '' and  self.button4.text() != '' and self.button5.text() != '' and  self.button6.text() != '' and self.button7.text() != '' and self.button8.text() != '':
+                mixer.music.load('SFX/tie_SFX.ogg')
+                mixer.music.set_volume(0.2)
+                mixer.music.play()
                 self.tie += 1
                 self.Tie_score.setText(f'Tie:{self.tie}')
                 self.label.setText('Tie!')
@@ -412,13 +424,19 @@ class Ui_MainWindow(object):
 
             #updates scores
             if btn.text() == 'x':
+                    mixer.music.load('SFX/XWIN_SFX.ogg')
+                    mixer.music.set_volume(0.2)
+                    mixer.music.play()
                     self.x += 1
                     self.X_score.setText(f"X:{self.x}")
             if btn.text() == 'o':
+                    mixer.music.load('SFX/OWIN_SFX.ogg')
+                    mixer.music.set_volume(0.2)
+                    mixer.music.play()
                     self.o += 1
                     self.O_score.setText(f"O:{self.o}")
             self.reset()
-    
+            
 
 if __name__ == "__main__":
     import sys
